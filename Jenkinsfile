@@ -31,7 +31,7 @@ pipeline {
             }
             steps {
                 script {
-                    docker.withRegistry('https://registry.hub.docker.com', 'docker_hub_login') {
+                    docker.withRegistry('https://registry.hub.docker.com', 'dockerHubLogin') {
                         app.push("${env.BUILD_NUMBER}")
                         app.push("latest")
                     }
@@ -47,7 +47,7 @@ pipeline {
             }
             steps {
                 kubernetesDeploy(
-                    kubeconfigId: 'kubeconfig',
+                    kubeconfigId: 'kubernetesId',
                     configs: 'railwaytt-kube-canary.yml',
                     enableConfigSubstitution: true
                 )
@@ -64,7 +64,7 @@ pipeline {
                 input 'Deploy to Production?'
                 milestone(1)
                 kubernetesDeploy(
-                    kubeconfigId: 'kubeconfig',
+                    kubeconfigId: 'kubernetesId',
                     configs: 'railwaytt-kube-canary.yml',
                     enableConfigSubstitution: true
                 )
@@ -76,7 +76,7 @@ pipeline {
     }*/
                 
                 kubernetesDeploy(
-                    kubeconfigId: 'kubeconfig',
+                    kubeconfigId: 'kubernetesId',
                     configs: 'railwaytt-kube.yml',
                     enableConfigSubstitution: true
                 )
